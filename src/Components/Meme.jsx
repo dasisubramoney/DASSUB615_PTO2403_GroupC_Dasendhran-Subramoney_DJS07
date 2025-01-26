@@ -1,15 +1,31 @@
 import React from "react"
 
 function Meme() {
+
+    const [allMemes, setAllMemes] = React.useState(memesData)
+
+    function getMemeImage(){
+        const memesArray = memesData.data.memes
+        const randomNumber = Math.floor(Math.random() * memesArray.length)
+    }
+
+    React.useEffect(() => {
+        fetch("https://api.imgflip.com/get_memes")
+            .then(res => res.json())
+            .then(data => setAllMemes(data.data.memes))
+    }, [])
+    
+    console.log(allMemes)
+
     return (
         <main>
-            <form className="Form">
+            <form className="form">
             <div>
                 <input
                     type="text"
                     id="name"
-                    name="name"
-                    placeholder="Shut up"
+                    className="form--input"
+                    placeholder="Top text"
                 />
             </div>
     
@@ -17,12 +33,17 @@ function Meme() {
                 <input
                         type="text"
                         id="name2"
-                        name="name2"
-                        placeholder="and take my money"
+                        className="form--input"
+                        placeholder="Bottom text"
                 />    
             </div>
 
-            <button type="submit">Submit</button>
+            <button 
+                type="submit" 
+                className="form--button"
+                onClick={getMemeImage}
+            
+            > Get a new meme image</button>
 
         </form>
         
